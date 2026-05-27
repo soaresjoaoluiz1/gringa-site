@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gringa — em breve · body splash</title>
+  <meta name="description" content="gringa Cosméticos · Body Splash 200ml. Aqua, Bella, Delírio, Rose. Em breve.">
+  <meta name="theme-color" content="#E8092F">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --red:        #E8092F;
+      --red-deep:   #B40020;
+      --red-soft:   #FF3050;
+      --pink-hot:   #FF0066;
+      --pink-light: #FFB3CC;
+      --black:      #0A0A0A;
+      --white:      #FFFFFF;
+      --cream:      #FFF8F0;
+      --gold:       #FFC857;
+      --orange:     #F58A2E;
+
+      --display: 'Anton', 'Impact', sans-serif;
+      --serif:   'Playfair Display', Georgia, serif;
+      --body:    'Inter', system-ui, sans-serif;
+
+      --ease:     cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      font-family: var(--body);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    html, body { overflow-x: hidden; }
+
+    body {
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, var(--red-soft) 0%, transparent 50%),
+        radial-gradient(ellipse 90% 70% at 50% 100%, var(--pink-hot) 0%, transparent 55%),
+        linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+      background-attachment: fixed;
+    }
+
+    /* ============================================================
+       NOISE TEXTURE
+       ============================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.06;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    /* ============================================================
+       FLOATING PARTICLES
+       ============================================================ */
+    .particles {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      filter: blur(0.5px);
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(110vh) scale(1);   opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .stage {
+      position: relative;
+      z-index: 5;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: clamp(28px, 4vw, 52px) clamp(20px, 4vw, 48px);
+      gap: 24px;
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: clamp(18px, 2.4vw, 32px);
+    }
+
+    .eyebrow {
+      font-family: var(--body);
+      font-size: clamp(11px, 1vw, 13px);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--white);
+      opacity: 0.6;
+    }
+
+    .logo-wrap {
+      position: relative;
+      display: inline-block;
+      opacity: 0;
+      filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.20)) drop-shadow(0 20px 40px rgba(255, 50, 80, 0.30));
+    }
+    .logo-img {
+      width: clamp(220px, 38vw, 460px);
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .logo-diamond {
+      position: absolute;
+      top: 1.5%;
+      left: 39.5%;
+      width: 8.3%;
+      aspect-ratio: 1;
+      background: var(--gold);
+      transform: rotate(45deg);
+      box-shadow:
+        0 0 30px var(--gold),
+        0 0 60px rgba(255, 200, 87, 0.5);
+      animation: dot 2.2s ease-in-out infinite;
+      border-radius: 2px;
+    }
+    @keyframes dot {
+      0%, 100% { transform: rotate(45deg) scale(1);    opacity: 1; }
+      50%      { transform: rotate(45deg) scale(1.25); opacity: 0.7; }
+    }
+
+    .product-tag {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+      color: var(--white);
+      letter-spacing: 0.02em;
+      opacity: 0;
+    }
+    .product-tag em {
+      font-weight: 600;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .divider {
+      width: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.4);
+      opacity: 0;
+    }
+
+    .coming-soon {
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: clamp(12px, 1.3vw, 15px);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 14px 32px;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border-radius: 100px;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+    }
+    .coming-soon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shine 4s ease-in-out infinite 3s;
+    }
+    @keyframes shine {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    .subline {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+      letter-spacing: 0.04em;
+      max-width: 520px;
+      line-height: 1.5;
+      color: var(--white);
+      opacity: 0;
+    }
+
+    /* ============================================================
+       PRODUCT FAN — editorial card-deck layout
+       ============================================================ */
+    .products {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      margin-top: clamp(16px, 2.5vw, 28px);
+      height: clamp(280px, 36vw, 440px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      perspective: 1400px;
+    }
+    .product {
+      position: absolute;
+      width: clamp(160px, 22vw, 260px);
+      aspect-ratio: 3 / 4;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.40),
+        0 6px 16px rgba(0, 0, 0, 0.25);
+      transform-origin: center bottom;
+      will-change: transform;
+      opacity: 0;
+    }
+    .product img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.7s var(--ease);
+    }
+
+    /* base fanned positions (1 = leftmost, 4 = rightmost) */
+    .product--1 { transform: translateX(-185%) translateY(36px) rotate(-12deg); z-index: 1; }
+    .product--2 { transform: translateX(-60%)  translateY(8px)  rotate(-4deg);  z-index: 2; }
+    .product--3 { transform: translateX(60%)   translateY(8px)  rotate(4deg);   z-index: 3; }
+    .product--4 { transform: translateX(185%)  translateY(36px) rotate(12deg);  z-index: 4; }
+
+    .product-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: clamp(10px, 1.4vw, 16px) clamp(12px, 1.6vw, 18px);
+      background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.86) 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      pointer-events: none;
+    }
+    .product-name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(0.95rem, 1.3vw, 1.25rem);
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .product-num {
+      font-family: var(--body);
+      font-size: 9.5px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       BOTTOM
+       ============================================================ */
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      opacity: 0;
+    }
+    .signature {
+      font-family: var(--body);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.65;
+    }
+    .signature strong {
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .socials {
+      display: flex;
+      gap: 14px;
+    }
+    .social-link {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: var(--white);
+      text-decoration: none;
+      transition: all 0.4s var(--ease);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(4px);
+    }
+    .social-link:hover {
+      background: var(--white);
+      color: var(--red);
+      transform: translateY(-3px);
+      border-color: var(--white);
+      box-shadow: 0 14px 30px rgba(255, 255, 255, 0.30);
+    }
+    .social-link svg { width: 18px; height: 18px; }
+
+    /* ============================================================
+       MOBILE
+       ============================================================ */
+    @media (max-width: 820px) {
+      .stage { padding: 24px 18px; gap: 18px; }
+      .eyebrow { font-size: 10px; letter-spacing: 0.3em; }
+      .eyebrow::before, .eyebrow::after { width: 18px; }
+      .logo-img { width: clamp(180px, 60vw, 260px); }
+      .product-tag { font-size: 1.05rem; }
+      .coming-soon { padding: 12px 24px; font-size: 11px; letter-spacing: 0.24em; }
+      .subline { font-size: 0.85rem; }
+      .signature { font-size: 9px; letter-spacing: 0.14em; }
+      .bottom { flex-direction: column; align-items: center; }
+
+      /* on mobile: clean 2x2 grid, no absolute positioning, no JS transforms */
+      .products {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        height: auto;
+        gap: 12px;
+        max-width: 460px;
+        margin: clamp(12px, 3vw, 22px) auto 0;
+        perspective: none;
+      }
+      .product {
+        position: relative;
+        width: 100%;
+        transform: none !important;
+        aspect-ratio: 3 / 4;
+      }
+      .product-name { font-size: 0.95rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+      .particle { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <main class="stage">
+
+    <section class="hero">
+      <span class="eyebrow" data-anim="eyebrow">Body Splash · 4 Fragrâncias</span>
+
+      <div class="logo-wrap" data-anim="logo">
+        <img src="assets/gringa-logo.png" alt="gringa" class="logo-img">
+        <span class="logo-diamond" aria-hidden="true"></span>
+      </div>
+
+      <p class="product-tag" data-anim="tag">a sua nova fragrância <em>chega em breve</em></p>
+
+      <div class="divider" data-anim="divider"></div>
+
+      <div class="coming-soon" data-anim="badge">Em breve por aqui</div>
+
+      <p class="subline" data-anim="subline">Estamos preparando algo especial pra você. Quatro fragrâncias, quatro humores. Segue a gente nas redes pra ser a primeira a saber do lançamento.</p>
+
+      <!-- ===== BODY SPLASH FAN ===== -->
+      <div class="products" id="products">
+        <article class="product product--1" data-i="0" data-rot="-12" data-tx="-185" data-ty="36">
+          <img src="assets/aqua.jpg" alt="gringa Aqua">
+          <div class="product-label">
+            <span class="product-name">aqua</span>
+          </div>
+        </article>
+        <article class="product product--2" data-i="1" data-rot="-4" data-tx="-60" data-ty="8">
+          <img src="assets/bella.jpg" alt="gringa Bella">
+          <div class="product-label">
+            <span class="product-name">bella</span>
+          </div>
+        </article>
+        <article class="product product--3" data-i="2" data-rot="4" data-tx="60" data-ty="8">
+          <img src="assets/delirio.jpg" alt="gringa Delírio">
+          <div class="product-label">
+            <span class="product-name">delírio</span>
+          </div>
+        </article>
+        <article class="product product--4" data-i="3" data-rot="12" data-tx="185" data-ty="36">
+          <img src="assets/rose.jpg" alt="gringa Rose">
+          <div class="product-label">
+            <span class="product-name">rose</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="bottom" data-anim="bottom">
+      <span class="signature">gringa cosméticos &middot; <strong>body splash</strong></span>
+      <nav class="socials" aria-label="Redes sociais">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://wa.me/" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          </svg>
+        </a>
+        <a href="mailto:" class="social-link" aria-label="E-mail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <script>
+    /* ============================================================
+       PARTICLES (perfume splash)
+       ============================================================ */
+    (function () {
+      const container = document.getElementById('particles');
+      if (!container) return;
+      const COUNT = window.innerWidth < 640 ? 18 : 36;
+      for (let i = 0; i < COUNT; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = 4 + Math.random() * 14;
+        const duration = 14 + Math.random() * 18;
+        const delay = -Math.random() * duration;
+        const left = Math.random() * 100;
+        p.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${left}vw;
+          animation-duration: ${duration}s;
+          animation-delay: ${delay}s;
+        `;
+        container.appendChild(p);
+      }
+    })();
+  </script>
+
+  <!-- ===== MOTION ONE — choreographed reveal + product interactions ===== -->
+  <script type="module">
+    import { animate, stagger } from "https://cdn.jsdelivr.net/npm/motion@11.18.0/+esm";
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 820px)').matches;
+    const EASE = [0.22, 1, 0.36, 1];
+    const EASE_OUT = [0.16, 1, 0.3, 1];
+
+    if (reduce) {
+      // make everything visible immediately
+      document.querySelectorAll('[data-anim]').forEach(el => el.style.opacity = 1);
+      document.querySelectorAll('.product').forEach(el => el.style.opacity = 1);
+    } else {
+
+      /* ── PAGE ENTRY CHOREOGRAPHY ── */
+      animate('[data-anim="eyebrow"]',
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.7, delay: 0.2, easing: EASE });
+
+      animate('[data-anim="logo"]',
+        { opacity: [0, 1], transform: ['translateY(40px) scale(0.92)', 'translateY(0) scale(1)'] },
+        { duration: 1.1, delay: 0.4, easing: EASE_OUT });
+
+      animate('[data-anim="tag"]',
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.9, delay: 0.85, easing: EASE });
+
+      animate('[data-anim="divider"]',
+        { opacity: [0, 1], width: ['0px', '60px'] },
+        { duration: 0.9, delay: 1.05, easing: EASE });
+
+      animate('[data-anim="badge"]',
+        { opacity: [0, 1], transform: ['translateY(16px) scale(0.9)', 'translateY(0) scale(1)'] },
+        { duration: 0.7, delay: 1.2, easing: [0.34, 1.56, 0.64, 1] });
+
+      animate('[data-anim="subline"]',
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.8, delay: 1.4, easing: EASE });
+
+      /* ── PRODUCT FAN — stagger reveal from a stacked collapsed state ── */
+      const products = document.querySelectorAll('.product');
+      products.forEach((p, i) => {
+        const rot = parseFloat(p.dataset.rot);
+        const tx  = parseFloat(p.dataset.tx);
+        const ty  = parseFloat(p.dataset.ty);
+
+        if (isMobile) {
+          /* no transform animation — CSS controls positioning. Only fade-in. */
+          p.style.opacity = 0;
+          animate(p,
+            { opacity: [0, 1] },
+            { duration: 0.6, delay: 1.6 + i * 0.1, easing: EASE_OUT });
+        } else {
+          // start collapsed in center, fan out
+          animate(p, {
+            opacity: [0, 1],
+            transform: [
+              `translateX(0%) translateY(120px) rotate(0deg) scale(0.7)`,
+              `translateX(${tx}%) translateY(${ty}px) rotate(${rot}deg) scale(1)`
+            ]
+          }, { duration: 1.1, delay: 1.6 + i * 0.12, easing: EASE_OUT });
+        }
+      });
+
+      /* ── BOTTOM ── */
+      animate('[data-anim="bottom"]',
+        { opacity: [0, 1], transform: ['translateY(16px)', 'translateY(0)'] },
+        { duration: 0.9, delay: 2.2, easing: EASE });
+
+      /* ── PRODUCT HOVER (desktop only) — focus card, others retreat ── */
+      if (!isMobile) {
+        const productsEl = document.getElementById('products');
+        products.forEach((p, idx) => {
+          const rot = parseFloat(p.dataset.rot);
+          const tx  = parseFloat(p.dataset.tx);
+          const ty  = parseFloat(p.dataset.ty);
+
+          p.addEventListener('mouseenter', () => {
+            // focused card: straighten + lift + scale + raise z
+            p.style.zIndex = 10;
+            animate(p, {
+              transform: `translateX(${tx * 0.4}%) translateY(${ty - 40}px) rotate(0deg) scale(1.10)`
+            }, { duration: 0.55, easing: EASE_OUT });
+
+            // other cards retreat slightly
+            products.forEach((o, oi) => {
+              if (oi === idx) return;
+              const orot = parseFloat(o.dataset.rot);
+              const otx  = parseFloat(o.dataset.tx);
+              const oty  = parseFloat(o.dataset.ty);
+              const dir = otx < tx ? -1 : 1;
+              animate(o, {
+                transform: `translateX(${otx + dir * 20}%) translateY(${oty + 8}px) rotate(${orot * 1.1}deg) scale(0.92)`,
+                opacity: 0.55
+              }, { duration: 0.55, easing: EASE });
+            });
+          });
+
+          p.addEventListener('mouseleave', () => {
+            // reset all
+            products.forEach((o) => {
+              const orot = parseFloat(o.dataset.rot);
+              const otx  = parseFloat(o.dataset.tx);
+              const oty  = parseFloat(o.dataset.ty);
+              animate(o, {
+                transform: `translateX(${otx}%) translateY(${oty}px) rotate(${orot}deg) scale(1)`,
+                opacity: 1
+              }, { duration: 0.55, easing: EASE });
+            });
+            setTimeout(() => { p.style.zIndex = p.dataset.i; }, 300);
+          });
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
