@@ -1,0 +1,7 @@
+# robots.txt — gringa Cosméticos
+# https://gringa.ind.br
+
+User-agent: *
+Allow: /
+
+Sitemap: https://gringa.ind.br/sitemap.xml
