@@ -61,7 +61,7 @@
         radial-gradient(ellipse 80% 60% at 50% 0%, var(--red-soft) 0%, transparent 50%),
         radial-gradient(ellipse 90% 70% at 50% 100%, var(--pink-hot) 0%, transparent 55%),
         linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
-      padding:clamp(28px,4vw,52px) 0 clamp(90px,10vw,140px);
+      padding:clamp(28px,4vw,52px) 0;
       display:flex;flex-direction:column;
     }
     .particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
@@ -98,14 +98,14 @@
     @keyframes shine{0%{left:-100%}100%{left:200%}}
     .subline{font-family:var(--body);font-weight:400;font-size:clamp(.9rem,1.05vw,1rem);max-width:520px;line-height:1.55;color:rgba(255,255,255,.78);opacity:0}
 
-    .scroll-down{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:6;
-      display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--white);
+    .scroll-down{margin-top:clamp(14px,2vw,22px);z-index:6;
+      display:inline-flex;flex-direction:column;align-items:center;gap:8px;color:var(--white);
       font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;
       opacity:0;animation:fadeInLate 1s var(--ease) 2.4s forwards, bob 2s ease-in-out infinite 3.4s;
-      cursor:pointer;text-decoration:none}
+      cursor:pointer;text-decoration:none;align-self:center}
     .scroll-down svg{width:12px;height:12px}
     @keyframes fadeInLate{to{opacity:.7}}
-    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
     /* ============================================================
        TICKER — Brasil quente cycling colors
@@ -531,18 +531,17 @@
         <span class="logo-diamond" aria-hidden="true"></span>
       </div>
 
-      <p class="product-tag" data-anim="tag">a sua nova fragrância <em>chega em breve.</em></p>
+      <p class="product-tag" data-anim="tag">a sua nova fragrância <em>chegou!</em></p>
 
       <div class="divider" data-anim="divider"></div>
 
+      <a href="#aqua" class="scroll-down" aria-label="Conheça as fragrâncias">
+        <span>role</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
     </div>
-
-    <a href="#aqua" class="scroll-down" aria-label="Conheça as fragrâncias">
-      <span>role</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </a>
   </section>
 
   <!-- TICKER — Brasil quente -->
